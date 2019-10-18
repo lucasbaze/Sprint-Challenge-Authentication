@@ -38,7 +38,18 @@ server.use(
 server.use(express.json());
 server.use(session(sessionConfig));
 
+server.get('/', (req, res) => {
+    res.status(200).json({
+        message: 'Server engaged. Initiate Joke Sequence.',
+    });
+});
+
 server.use('/api/auth', authRouter);
 server.use('/api/jokes', authenticate, jokesRouter);
+
+server.use((err, req, res, next) => {
+    let { status, message } = err;
+    res.status(status).json({ message });
+});
 
 module.exports = server;

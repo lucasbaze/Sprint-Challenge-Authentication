@@ -19,4 +19,4 @@ module.exports = {
         },
         seeds: { directory: './database/seeds' },
     },
-}[process.env.DB_ENV || 'testing'];
+}[process.env.DB_ENV || 'development'];
