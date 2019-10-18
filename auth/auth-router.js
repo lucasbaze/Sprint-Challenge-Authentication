@@ -9,6 +9,7 @@ router.post(
     takenUsername,
     async (req, res, next) => {
         let user = req.body;
+        console.log(user);
         req.session.user = user;
         let createdUser = await Auth.register(user);
         res.status(200).json(createdUser);
@@ -66,22 +67,19 @@ function registerReqs(req, res, next) {
             status: 409,
             message: 'Missing Username',
         });
-    }
-    if (!user.password) {
+    } else if (!user.password) {
         next({
             status: 409,
             message: 'Missing Password',
         });
-    }
-
-    if (user.password.length < 8) {
+    } else if (user.password.length < 8) {
         next({
             status: 409,
             message: 'Password must be at least 8 chars',
         });
+    } else {
+        next();
     }
-
-    next();
 }
 
 //
